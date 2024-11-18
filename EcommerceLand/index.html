@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/1893f8b6d1.js" crossorigin="anonymous"></script>
+    <title>Restaurante XYZ</title>
+    <link rel="icon" href="https://i.pinimg.com/236x/9c/0e/de/9c0edef80de1893774c8a74883a916f9.jpg" type="image/x-icon">
+    <style>
+        .animate-up-down {
+            animation: upDown 1s ease-in-out alternate infinite;
+        }
+
+        @keyframes upDown {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .active {
+            background-color: #fc8019;
+            /* Color de fondo activo */
+            border-color: #050828;
+            /* Color del borde activo */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+
+<body class="bg-[#010421] text-white">
+    <div id="modal" class="fixed top-14 z-[100] right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hidden">
+        Producto agregado exitosamente
+    </div>
+    <main class="lg:mx-15 mx-5">
+        <header class="fixed bg-[#01031e] w-full top-0 py-2 left-0 z-50 flex items-center transition-opacity">
+            <div class="text-white text-xl  w-full flex justify-between items-center mx-4 md:mx-10 ">
+                <div class="text-center">
+                    <img src="https://i.pinimg.com/236x/9c/0e/de/9c0edef80de1893774c8a74883a916f9.jpg"
+                        alt="Logo de la empresa" class="h-12 w-12  rounded-full mr-4">
+                </div>
+                <div class="text-center">
+                    <a href="#" class="p-3 lg:mx-10">Inicio</a>
+                    <a href="#Menu" class="p-3 lg:mx-10">Menú</a>
+                    <button id="toggleCart" class="mx-8 md:mx-14 lg:ml-16 lg:mr-56 relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCounter"
+                            class="bg-red-500 text-white rounded-full py-1 px-2 absolute -top-3 text-xs -right-5 hidden"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="cartContainer"
+                class=" hidden absolute mt-4 top-[48px] xl:right-[10%] lg:right-[20%] right-1 sm:right-4 z-50 w-[370px] bg-gray-700 ">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-[100%] text-sm text-center rtl:text-right  dark:text-gray-400 text-white">
+                        <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Pedido
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Cantidad
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Precio
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="carrito-productos" class="text-white">
+                            <!-- Aquí se agregarán dinámicamente los productos -->
+                        </tbody>
+
+                    </table>
+                    <div class="flex items-center justify-evenly text-center bg-gray-700 py-2">
+                        <button id="pagarButton" href="#"
+                            class=" inline-block px-4 py-2 text-white bg-green-700 hover:bg-green-500 rounded-lg shadow-md focus:bg-green-600 ">
+                            Pagar
+                        </button>
+
+
+                        <span id="total-cuenta" class="ml-10 text-white">Total: $0.00</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+
+
+        <section class=" container mx-auto w-full relative mt-12">
+            <div class="  md:flex    items-center ">
+                <div
+                    class="w-80 h-80 bg-red-700 -z-10 absolute opacity-30 rounded-full blur-2xl overflow-hidden top-0 left-0">
+                </div>
+                <div
+                    class="w-80 h-80 bg-orange-400 -z-10 absolute opacity-30 rounded-full blur-2xl overflow-hidden bottom-0 right-0">
+                </div>
+                <div class="flex items-center  flex-col">
+                    <h1 class=" text-2xl font-bold text-center my-8 lg:text-3xl xl:text-5xl ">FELICIDAD EN TU
+                        ESTÓMAGO CON DELICIOSAS HAMBURGUESAS
+                    </h1>
+                    <p class="text-base lg:text-xl text-center mb-2 xl:text-2xl">¡Sumérgete en un mundo de sabores con
+                        nuestras hamburguesas
+                        irresistibles! En nuestro restaurante,
+                        cada bocado es una experiencia de felicidad gastronómica.</p>
+                    <a href="#Menu"
+                        class="py-2 px-8 rounded-lg bg-[#e58447] hover:bg-[#eb8d52] lg:py-3 lg:px-10 lg:text-2xl lg:mt-8 font-semibold text-lg text-center  my-4 z-10">¡Pide
+                        Ahora!</a>
+                </div>
+
+                <img src="imagenes/fondo2.png"
+                    class="animate-up-down relative bottom-12 sm:bottom-0 w-full md:w-1/2 lg:w-full">
+            </div>
+
+        </section>
+
+        <div class="flex justify-center space-x-4 mt-4" id="Menu">
+            <button onclick="todo(); setActive(this)"
+                class="px-4 py-2 bg-blue-[#050828]  hover:bg-[#fc8019] border border-solid border-gray-700 text-white font-semibold rounded-md shadow-md transition duration-300 ease-in-out">Todo</button>
+            <button onclick="comidas(); setActive(this)"
+                class="px-4 py-2 bg-blue-[#050828] hover:bg-[#fc8019] border border-solid border-gray-700 text-white font-semibold rounded-md shadow-md transition duration-300 ease-in-out">Comida</button>
+            <button onclick="bebidas(); setActive(this)"
+                class="px-4 py-2 bg-blue-[#050828] hover:bg-[#fc8019] border border-solid border-gray-700 text-white font-semibold rounded-md shadow-md transition duration-300 ease-in-out">Bebidas</button>
+        </div>
+
+        <section class=" comida w-full relative mt-12 bg-[#01031e] ">
+            <div class=" container mx-auto flex flex-wrap gap-8 justify-center">
+
+                <div class=" h-80 w-72 relative rounded-[20px] border border-solid border-gray-700 hover:bg-[#01051a]">
+                    <div class="h-48 overflow-hidden bg-[]">
+                        <img src="imagenes/hamburguesa.jpg" class="w-full h-48 object-contain " alt="Hamburguesa 1">
+                    </div>
+                    <h3 class="text-white text-left text-xl font-semibold ml-4">Hamburguesa Clásica</h3>
+                    <div class="h-28 flex justify-around items-center ">
+                        <h3 class="text-2xl font-bold text-[#fc8019]">$5.99</h3>
+                        <button onclick="agregarAlCarrito('hamburguesa Clásica', 5.99)"
+                            class="inline-flex items-center px-5 py-4 text-sm font-medium text-center  text-white bg-[#fc8019] rounded-lg hover:bg-[#ff9200]">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class=" h-80 w-72 relative rounded-[20px] border border-solid border-gray-700 hover:bg-[#01051a]">
+                    <div class="h-48 overflow-hidden bg-[]">
+                        <img src="imagenes/HamburguesaDoble.jpg" class="w-full  h-44 mt-4 object-contain "
+                            alt="Hamburguesa 1">
+                    </div>
+                    <h3 class="text-white text-left text-xl font-semibold ml-4">Hamburguesa Doble</h3>
+                    <div class="h-28 flex justify-around items-center ">
+                        <h3 class="text-2xl font-bold text-[#fc8019]">$7.99</h3>
+                        <button onclick="agregarAlCarrito('Hamburguesa Doble', 7.99)"
+                            class="inline-flex items-center px-5 py-4 text-sm font-medium text-center  text-white bg-[#fc8019] rounded-lg hover:bg-[#ff9200]">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class=" h-80 w-72 relative rounded-[20px] border border-solid border-gray-700 hover:bg-[#01051a]">
+                    <div class="h-48 overflow-hidden bg-[]">
+                        <img src="imagenes/HamburguesaHawaiana.jpg" class="w-full  h-44 mt-4 object-contain "
+                            alt="Hamburguesa 1">
+                    </div>
+                    <h3 class="text-white text-left text-xl font-semibold ml-4">Hamburguesa Hawaiana</h3>
+                    <div class="h-28 flex justify-around items-center ">
+                        <h3 class="text-2xl font-bold text-[#fc8019]">$6.99</h3>
+                        <button onclick="agregarAlCarrito('Hamburguesa Hawaiana', 6.99)"
+                            class="inline-flex items-center px-5 py-4 text-sm font-medium text-center  text-white bg-[#fc8019] rounded-lg hover:bg-[#ff9200]">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class=" h-80 w-72 relative rounded-[20px] border border-solid border-gray-700 hover:bg-[#01051a]">
+                    <div class="h-48 overflow-hidden bg-[]">
+                        <img src="imagenes/HamburguesaPollo.jpg" class="w-full h-48 object-contain "
+                            alt="Hamburguesa 1">
+                    </div>
+                    <h3 class="text-white text-left text-xl font-semibold ml-4">Hamburguesa de Pollo</h3>
+                    <div class="h-28 flex justify-around items-center ">
+                        <h3 class="text-2xl font-bold text-[#fc8019]">$5.99</h3>
+                        <button onclick="agregarAlCarrito('Hamburguesa Pollo', 5.99)"
+                            class="inline-flex items-center px-5 py-4 text-sm font-medium text-center  text-white bg-[#fc8019] rounded-lg hover:bg-[#ff9200]">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class=" h-80 w-72 relative rounded-[20px] border border-solid border-gray-700 hover:bg-[#01051a]">
+                    <div class="h-48 overflow-hidden bg-[]">
+                        <img src="imagenes/HamburguesaQueso.jpg" class="w-full h-44 mt-4 object-contain "
+                            alt="Hamburguesa 1">
+                    </div>
+                    <h3 class="text-white text-left text-xl font-semibold ml-4">Hamburguesa de Queso</h3>
+                    <div class="h-28 flex justify-around items-center ">
+                        <h3 class="text-2xl font-bold text-[#fc8019]">$6.99</h3>
+                        <button onclick="agregarAlCarrito('Hamburguesa Queso', 6.99)"
+                            class="inline-flex items-center px-5 py-4 text-sm font-medium text-center  text-white bg-[#fc8019] rounded-lg hover:bg-[#ff9200]">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+
+        <section class="bebidas  w-full relative mt-12 bg-[#01031e]">
+            <div class=" container mx-auto flex flex-wrap gap-8 justify-center">
+
+                <div class="  h-80 w-72 relative rounded-[20px] border border-solid border-gray-700 hover:bg-[#01051a]">
+                    <div class="h-48 overflow-hidden bg-[]">
+                        <img src="imagenes/Coca-Cola.jpg" class="w-full h-44 mt-4 object-contain " alt="Hamburguesa 1">
+                    </div>
+                    <h3 class="text-white text-left text-xl font-semibold ml-4">Cola Cola</h3>
+                    <div class="h-28 flex justify-around items-center ">
+                        <h3 class="text-2xl font-bold text-[#fc8019]">$4.99</h3>
+                        <button onclick="agregarAlCarrito('Coca Cola', 4.99)"
+                            class="inline-flex items-center px-5 py-4 text-sm font-medium text-center  text-white bg-[#fc8019] rounded-lg hover:bg-[#ff9200]">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="  h-80 w-72 relative rounded-[20px] border border-solid border-gray-700 hover:bg-[#01051a]">
+                    <div class="h-48 overflow-hidden bg-[]">
+                        <img src="imagenes/incaCola.png" class="w-full h-44 mt-4 object-contain " alt="Hamburguesa 1">
+                    </div>
+                    <h3 class="text-white text-left text-xl font-semibold ml-4">Inca Cola</h3>
+                    <div class="h-28 flex justify-around items-center ">
+                        <h3 class="text-2xl font-bold text-[#fc8019]">$4.99</h3>
+                        <button onclick="agregarAlCarrito('Inca Cola', 4.99)"
+                            class="inline-flex items-center px-5 py-4 text-sm font-medium text-center  text-white bg-[#fc8019] rounded-lg hover:bg-[#ff9200]">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="  h-80 w-72 relative rounded-[20px] border border-solid border-gray-700 hover:bg-[#01051a]">
+                    <div class="h-48 overflow-hidden bg-[]">
+                        <img src="imagenes/Pepsi.jpg" class="w-full h-44 mt-4 object-contain " alt="Hamburguesa 1">
+                    </div>
+                    <h3 class="text-white text-left text-xl font-semibold ml-4">Pepsi</h3>
+                    <div class="h-28 flex justify-around items-center ">
+                        <h3 class="text-2xl font-bold text-[#fc8019]">$4.99</h3>
+                        <button onclick="agregarAlCarrito('Pepsi', 4.99)"
+                            class="inline-flex items-center px-5 py-4 text-sm font-medium text-center  text-white bg-[#fc8019] rounded-lg hover:bg-[#ff9200]">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="  h-80 w-72 relative rounded-[20px] border border-solid border-gray-700 hover:bg-[#01051a]">
+                    <div class="h-48 overflow-hidden bg-[]">
+                        <img src="imagenes/JugoNaranja.jpg" class="w-full h-44 mt-4 object-contain "
+                            alt="Hamburguesa 1">
+                    </div>
+                    <h3 class="text-white text-left text-xl font-semibold ml-4">Jugo de Naranja</h3>
+                    <div class="h-28 flex justify-around items-center ">
+                        <h3 class="text-2xl font-bold text-[#fc8019]">$4.99</h3>
+                        <button onclick="agregarAlCarrito('Jugo Naranja', 4.99)"
+                            class="inline-flex items-center px-5 py-4 text-sm font-medium text-center  text-white bg-[#fc8019] rounded-lg hover:bg-[#ff9200]">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer>
+            <div class="bg-[#010421] mt-10 text-white text-center py-8">
+                <p class="text-lg">Restaurante XYZ - Todos los derechos reservados</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var todoBtn = document.querySelector("#Menu button:nth-child(1)");
+            todoBtn.classList.add("active");
+        });
+
+
+        function setActive(element) {
+            var buttons = document.querySelectorAll("#Menu button");
+            buttons.forEach(function (btn) {
+                btn.classList.remove("active");
+            });
+            element.classList.add("active");
+        }
+    </script>
+
+    <script>
+        let comidasElements = document.querySelectorAll('.comida');
+        let bebidasElements = document.querySelectorAll('.bebidas');
+
+        function todo() {
+            comidasElements.forEach(comida => comida.classList.remove('hidden'));
+            bebidasElements.forEach(bebida => bebida.classList.remove('hidden'));
+        }
+
+        function comidas() {
+            comidasElements.forEach(comida => comida.classList.remove('hidden'));
+            bebidasElements.forEach(bebida => bebida.classList.add('hidden'));
+        }
+
+        function bebidas() {
+            bebidasElements.forEach(bebida => bebida.classList.remove('hidden'));
+            comidasElements.forEach(comida => comida.classList.add('hidden'));
+        }
+    </script>
+
+
+<script>
+
+    let totalCuenta = 0;
+    const pagarButton = document.getElementById('pagarButton');
+
+    pagarButton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const carritoData = JSON.parse(localStorage.getItem('carritoData'));
+
+        if (carritoData && carritoData.length > 0 && totalCuenta) {
+            console.log('Datos del carrito:', carritoData);
+            console.log('Total de la cuenta:', totalCuenta);
+
+            window.location.href = 'datos.html';
+        } else {
+            const modal = document.getElementById('modal');
+            modal.textContent = 'El carrito está vacío';
+            modal.classList.remove('bg-green-500');
+            modal.classList.add('bg-red-500');
+            modal.classList.remove('hidden');
+            setTimeout(function () {
+                modal.classList.add('hidden');
+            }, 1000);
+        }
+    });
+
+
+    function agregarAlCarrito(nombreProducto, precio) {
+        const pagarButton = document.getElementById('pagarButton');
+        pagarButton.href = 'datos.html';
+
+        const carritoProductos = document.getElementById('carrito-productos');
+        const filas = carritoProductos.getElementsByTagName('tr');
+        const modal = document.getElementById('modal');
+
+        modal.classList.remove('hidden');
+        setTimeout(function () {
+            modal.classList.add('hidden');
+        }, 1000);
+
+        let productoExistente = null;
+        for (const fila of filas) {
+            const nombreCelda = fila.getElementsByTagName('td')[0];
+
+            if (nombreCelda.textContent === nombreProducto) {
+                productoExistente = fila;
+                break;
+            }
+        }
+
+        if (productoExistente) {
+            const celdaCantidad = productoExistente.querySelector('.cantidad');
+            const cantidad = parseInt(celdaCantidad.textContent) + 1;
+            celdaCantidad.textContent = cantidad;
+
+            const precioTotalProducto = cantidad * precio;
+            const celdaPrecio = productoExistente.querySelector('td:nth-child(3)');
+            celdaPrecio.textContent = `$${precioTotalProducto.toFixed(2)}`;
+
+            totalCuenta += precio;
+            
+        } else {
+            const nuevaFila = document.createElement('tr');
+            nuevaFila.dataset.nombre = nombreProducto;
+
+            const celdaProducto = document.createElement('td');
+            celdaProducto.textContent = nombreProducto;
+            celdaProducto.classList.add('px-4', 'py-2');
+            const celdaCantidad = document.createElement('td');
+            celdaCantidad.innerHTML = `<span class="cantidad">1</span>`;
+
+            const celdaPrecio = document.createElement('td');
+            celdaPrecio.textContent = `$${precio.toFixed(2)}`;
+
+            const celdaAccion = document.createElement('td');
+            const enlaceEliminar = document.createElement('button');
+
+            const iconoBasura = document.createElement('i');
+            iconoBasura.classList.add('fas', 'fa-trash-alt');
+            
+            enlaceEliminar.textContent = '';
+            enlaceEliminar.appendChild(iconoBasura);
+            enlaceEliminar.href = '#';
+            enlaceEliminar.classList.add('font-medium', 'text-red-600', 'dark:text-red-500', 'hover:underline');
+            enlaceEliminar.addEventListener('click', function () {
+                const cantidad = parseInt(celdaCantidad.textContent);
+                if (cantidad > 1) {
+                    celdaCantidad.textContent = cantidad - 1;
+                    const precioTotalProducto = (cantidad - 1) * precio;
+                    celdaPrecio.textContent = `$${precioTotalProducto.toFixed(2)}`;
+                    totalCuenta -= precio;
+                } else {
+                    carritoProductos.removeChild(nuevaFila);
+                    totalCuenta -= precio;
+                }
+                actualizarTotalCuenta();
+                actualizarDatosCarrito();
+            });
+            celdaAccion.appendChild(enlaceEliminar);
+
+            nuevaFila.classList.add('bg-gray-800');
+            nuevaFila.appendChild(celdaProducto);
+            nuevaFila.appendChild(celdaCantidad);
+            nuevaFila.appendChild(celdaPrecio);
+            nuevaFila.appendChild(celdaAccion);
+            carritoProductos.appendChild(nuevaFila);
+            totalCuenta += precio;
+        }
+
+        if (totalCuenta === 0) {
+            const modal = document.getElementById('modal');
+            modal.textContent = 'El carrito está vacío';
+            modal.classList.remove('bg-green-500');
+            modal.classList.add('bg-red-500');
+            modal.classList.remove('hidden');
+            setTimeout(function () {
+                modal.classList.add('hidden');
+            }, 1000);
+        } else {
+            const modal = document.getElementById('modal');
+            modal.textContent = ' Producto agregado exitosamente';
+            modal.classList.remove('bg-red-500');
+            modal.classList.add('bg-green-500');
+            modal.classList.remove('hidden');
+            setTimeout(function () {
+                modal.classList.add('hidden');
+            }, 1000);
+        }
+        
+        actualizarTotalCuenta();
+        actualizarDatosCarrito();
+    }
+
+    function actualizarContadorCarrito() {
+        const filasCarrito = document.querySelectorAll('#carrito-productos tr');
+        let totalProductos = 0;
+
+        filasCarrito.forEach((fila) => {
+            const cantidad = parseInt(fila.querySelector('.cantidad').textContent);
+            totalProductos += cantidad;
+        });
+
+        const cartCounter = document.getElementById('cartCounter');
+        if (totalProductos > 0) {
+            cartCounter.textContent = totalProductos;
+            cartCounter.classList.remove('hidden');
+        } else {
+            cartCounter.classList.add('hidden');
+        }
+    }
+
+    function actualizarTotalCuenta() {
+        const totalSpan = document.getElementById('total-cuenta');
+        const totalFormateado = totalCuenta.toFixed(2);
+        totalSpan.textContent = `Total: $${totalFormateado === '-0.00' ? '0.00' : totalFormateado}`;
+    }
+
+    function actualizarDatosCarrito() {
+
+        const filasCarrito = document.querySelectorAll('#carrito-productos tr');
+
+        const carritoData = [];
+
+        filasCarrito.forEach((fila) => {
+            const nombreProducto = fila.querySelector('td:nth-child(1)').textContent;
+            const cantidad = fila.querySelector('.cantidad').textContent;
+            const precioTotal = fila.querySelector('td:nth-child(3)').textContent;
+
+            carritoData.push({
+                nombre: nombreProducto,
+                cantidad: cantidad,
+                precioTotal: precioTotal
+            });
+        });
+
+        localStorage.setItem('carritoData', JSON.stringify(carritoData));
+        localStorage.setItem('totalCuenta', totalCuenta.toFixed(2));
+        actualizarContadorCarrito();
+    }
+</script>
+
+
+    <script>
+        const toggleCartButton = document.getElementById('toggleCart');
+        const cartContainer = document.getElementById('cartContainer');
+
+        toggleCartButton.addEventListener('click', function () {
+            cartContainer.classList.toggle('hidden');
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+
+</html>

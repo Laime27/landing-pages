@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/1893f8b6d1.js" crossorigin="anonymous"></script>
+    <title>Restaurante XYZ</title>
+    <link rel="icon" href="https://i.pinimg.com/236x/9c/0e/de/9c0edef80de1893774c8a74883a916f9.jpg" type="image/x-icon">
+    <style>
+        .animate-up-down {
+            animation: upDown 1s ease-in-out alternate infinite;
+        }
+
+        @keyframes upDown {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .active {
+            background-color: #fc8019;
+         
+            border-color: #050828;
+        
+        }
+    </style>
+</head>
+
+
+<body class="bg-[#010421] text-white">
+
+    <main class="lg:mx-15 mx-5">
+        <header class="fixed bg-[#01031e]  py-2 w-full top-0 left-0 z-50 flex items-center transition-opacity">
+            <div class="text-white text-xl  w-full flex justify-between items-center mx-4 md:mx-10 ">
+                <div class="text-center">
+                    <img src="https://i.pinimg.com/236x/9c/0e/de/9c0edef80de1893774c8a74883a916f9.jpg"
+                        alt="Logo de la empresa" class="h-12 w-12  rounded-full mr-4">
+                </div>
+                <div class="text-center">
+                    <a href="index.html" class="p-3 lg:mx-10">Inicio</a>
+                    <a href="index.html" class="p-3 lg:mx-10">Menú</a>
+
+                </div>
+            </div>
+
+        </header>
+
+
+
+        <section class=" mt-28">
+            <div class="flex h-full flex-col justify-center">
+                <!-- Table -->
+                <div class="mx-auto w-full max-w-2xl rounded-sm border border-gray-700  shadow-lg">
+                    <header class="border-b border-gray-700 px-5 py-4">
+                        <div class="font-semibold text-white">Carrito</div>
+                    </header>
+
+                    <div class="overflow-x-auto p-3">
+                        <table class="w-full table-auto ">
+                            <thead class="bg-slate-500 text-xs font-semibold  uppercase text-white">
+                                <tr>
+
+                                    <th class="p-2">
+                                        <div class="text-center font-semibold ">Producto</div>
+                                    </th>
+                                    <th class="p-2">
+                                        <div class="text-center font-semibold ">Cantidad</div>
+                                    </th>
+                                    <th class="p-2">
+                                        <div class="text-center font-semibold ">Total</div>
+                                    </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody class="divide-y divide-gray-100 text-sm " id="carrito-datos">
+                            </tbody>
+                        </table>
+                    </div>
+
+                   
+                    <div class="flex justify-end space-x-4 border-t border-gray-100 px-5 py-4 text-2xl font-bold">
+                        <div>Total</div>
+                        <div class="text-green-500"><span id="total-cuenta"></span></div>
+                    </div>
+
+                    <div class="flex justify-end">
+                       
+                        <input type="hidden" class="border border-black bg-gray-50" x-model="selected" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <form id="paymentForm" class="max-w-lg mx-auto mt-8">
+            <div class="mb-4">
+                <label for="nombre" class="block text-white font-bold mb-2">Ingresar nombre</label>
+                <input type="text" id="nombre" placeholder="Nombre"
+                    class="w-full border border-gray-300 text-black rounded-md py-2 px-3 focus:outline-none focus:border-blue-500">
+                <div id="nombreError" class="error-message text-red-500 font-semibold"></div>
+            </div>
+            <div class="mb-4">
+                <label for="telefono" class="block text-white font-bold mb-2">Ingresar teléfono</label>
+                <input type="text" id="telefono" placeholder="Teléfono"
+                    class="w-full border text-black border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500">
+                <div id="telefonoError" class="error-message text-red-500 font-semibold"></div>
+            </div>
+            <div class="mb-4">
+                <label for="direccion" class="block text-white font-bold mb-2">Ingresar dirección</label>
+                <input type="text" id="direccion" placeholder="Dirección"
+                    class="w-full border border-gray-300 text-black rounded-md py-2 px-3 focus:outline-none focus:border-blue-500">
+                <div id="direccionError" class="error-message text-red-500 font-semibold"></div>
+            </div>
+            <div class="mb-4">
+                <label for="metodoPago" class="block text-white font-bold mb-2">Método de pago</label>
+                <select id="metodoPago"
+                    class="w-full border text-black border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500">
+                    <option value="efectivo">Efectivo</option>
+                    <option value="tarjeta">Tarjeta</option>
+                </select>
+            </div>
+            <center>
+                <button type="button" onclick="enviarWhatsApp()"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mt-2 rounded focus:outline-none focus:shadow-outline">Enviar
+                    a WhatsApp</button>
+            </center>
+        </form>
+
+
+
+
+
+
+        <footer class="relative bottom-0">
+            <div class="bg-[#010421] mt-10 text-white text-center py-8">
+                <p class="text-lg">Restaurante XYZ - Todos los derechos reservados</p>
+            </div>
+        </footer>
+    </main>
+
+
+    <script>
+     
+        const carritoData = JSON.parse(localStorage.getItem('carritoData'));
+
+        const carritoDatosContainer = document.getElementById('carrito-datos');
+
+      
+        let totalCuenta = 0;
+        carritoData.forEach((producto) => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td class="font-medium text-white text-center py-2">${producto.nombre}</td>
+                <td class="font-medium text-white text-center">${producto.cantidad}</td>
+                <td class="text-left font-medium text-white text-center">${producto.precioTotal}</td>
+            `;
+            carritoDatosContainer.appendChild(fila);
+
+            
+            totalCuenta += parseFloat(producto.precioTotal.replace('$', ''));
+        });
+
+        
+        document.getElementById('total-cuenta').textContent = totalCuenta.toFixed(2);
+
+     
+        function enviarWhatsApp() {
+           
+            const nombre = document.getElementById('nombre').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const direccion = document.getElementById('direccion').value.trim();
+
+            const metodoPago = document.getElementById('metodoPago').value;
+
+            if (!nombre) {
+                document.getElementById('nombreError').textContent = 'Por favor, ingresa tu nombre';
+                document.getElementById('nombre').focus();
+                return;
+            } else {
+                document.getElementById('nombreError').textContent = '';
+            }
+
+            if (!telefono) {
+                document.getElementById('telefonoError').textContent = 'Por favor, ingresa tu teléfono';
+                document.getElementById('telefono').focus();
+                return;
+            } else {
+                document.getElementById('telefonoError').textContent = '';
+            }
+
+            if (!direccion) {
+                document.getElementById('direccionError').textContent = 'Por favor, ingresa tu dirección';
+                document.getElementById('direccion').focus();
+                return;
+            } else {
+                document.getElementById('direccionError').textContent = '';
+            }
+
+
+           
+            let mensaje = '🍔🥤🍟 Hola, aquí están los detalles de mi pedido:\n\n';
+            let contador = 1;
+            carritoData.forEach((producto) => {
+                mensaje += `✅ ${producto.nombre}: ${producto.cantidad} x ${producto.precioTotal} \n`;
+                contador++;
+            });
+            mensaje += `\n➡️ Total: $${totalCuenta.toFixed(2)}\n\n`;
+            mensaje += `➡️ Información de contacto:\nNombre: ${nombre}\nTeléfono: ${telefono}\nDirección: ${document.getElementById('direccion').value}\n 💳 Método de Pago: ${metodoPago}`;
+
+          
+            mensaje = encodeURIComponent(mensaje); 
+
+            var number = "995305303"; 
+            var urlApiWhats = "https://api.whatsapp.com/send/?phone=" + number + "&text=" + mensaje;
+
+           
+            window.open(urlApiWhats);
+        }
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+
+</html>
